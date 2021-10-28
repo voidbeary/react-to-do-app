@@ -1,19 +1,13 @@
-function List({ value }) {
-  console.log(value);
+import { Todo } from "./Todo.js";
 
-  return value.map((todo) => {
-    return (
-      <li className="list-group-item" key={todo.id}>
-        <input
-          type="checkbox"
-          value=""
-          aria-label="mark to do done"
-          className="form-check-input me-2"
-        ></input>
-        {todo.value}
-      </li>
-    );
-  });
+function List({ value }) {
+  return (
+    <ul className="list-group">
+      {value.map((todo) => {
+        return <Todo todo={todo} key={todo.id} />;
+      })}
+    </ul>
+  );
 }
 
 export { List };

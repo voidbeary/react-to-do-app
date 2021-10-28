@@ -1,46 +1,29 @@
 import { List } from "./List.js";
 import { useState } from "react";
-import { Submit } from "./Submit.js";
+import { Form } from "./Form.js";
+import { Header } from "./Header.js";
+
+function getToDos() {
+  const toDosString = localStorage.todos || "[]";
+  const toDos = JSON.parse(toDosString);
+  return toDos;
+}
 
 function App() {
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState(getToDos);
 
-  function handleSubmit(e) {
-    e.preventDefault();
-
-    const toDo = {
-      value: e.target.elements["new-item"].value,
-      id: `todo-${Date.now()}`,
-    };
-
-    setTodos([...todos, toDo]);
+  function handleNewTodoSubmit(toDo) {
+    const newTodos = [...todos, toDo];
+    setTodos(newTodos);
+    localStorage.setItem("todos", JSON.stringify(newTodos));
   }
+
   return (
     <>
-      <header
-        className="w-100 py-2 ps-3 mb-4"
-        style={{ backgroundColor: "#502", color: "white" }}
-      >
-        <h1>To do list</h1>
-      </header>
+      <Header />
       <main className="container pxsm-5">
-        <ul className="list-group">
-          <List value={todos} />
-        </ul>
-        <form onSubmit={handleSubmit}>
-          <input
-            id="new-item"
-            className="form-control"
-            placeholder="New to do"
-            aria-label="new todo text"
-            autoFocus=""
-            tabIndex="0"
-            required
-          />
-          <label htmlFor="new-item">
-            <Submit />
-          </label>
-        </form>
+        <List value={todos} />
+        <Form onNewTodoSubmit={handleNewTodoSubmit} />
       </main>
     </>
   );
