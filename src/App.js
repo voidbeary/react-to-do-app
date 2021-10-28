@@ -8,7 +8,11 @@ function App() {
   function handleSubmit(e) {
     e.preventDefault();
 
-    const toDo = e.target.elements["new-item"].value;
+    const toDo = {
+      value: e.target.elements["new-item"].value,
+      id: `todo-${Date.now()}`,
+    };
+
     setTodos([...todos, toDo]);
   }
   return (
@@ -20,7 +24,9 @@ function App() {
         <h1>To do list</h1>
       </header>
       <main className="container pxsm-5">
-        <ul className="list-group"></ul>
+        <ul className="list-group">
+          <List value={todos} />
+        </ul>
         <form onSubmit={handleSubmit}>
           <input
             id="new-item"
@@ -35,9 +41,6 @@ function App() {
             <Submit />
           </label>
         </form>
-        <ul className="list-group">
-          <List value={todos} />
-        </ul>
       </main>
     </>
   );
