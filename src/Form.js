@@ -2,10 +2,12 @@ function Form({ onNewTodoSubmit }) {
   function handleSubmit(e) {
     e.preventDefault();
 
+    const input = e.target.elements["new-item"];
     const toDo = {
-      value: e.target.elements["new-item"].value,
+      value: input.value,
       id: `todo-${Date.now()}`,
     };
+    input.value = "";
 
     onNewTodoSubmit(toDo);
   }

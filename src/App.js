@@ -17,12 +17,17 @@ function App() {
     setTodos(newTodos);
     localStorage.setItem("todos", JSON.stringify(newTodos));
   }
+  function removeToDo(id) {
+    const newTodos = todos.filter((toDo) => toDo.id !== id);
+    setTodos(newTodos);
+    localStorage.setItem("todos", JSON.stringify(newTodos));
+  }
 
   return (
     <>
       <Header />
       <main className="container pxsm-5">
-        <List value={todos} />
+        <List value={todos} onRemove={removeToDo} />
         <Form onNewTodoSubmit={handleNewTodoSubmit} />
       </main>
     </>
