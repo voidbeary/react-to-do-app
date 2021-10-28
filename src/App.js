@@ -1,16 +1,27 @@
+import { List } from "./List.js";
+import { useState } from "react";
+import { Submit } from "./Submit.js";
+
 function App() {
+  const [todos, setTodos] = useState([]);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    const toDo = e.target.elements["new-item"].value;
+    setTodos([...todos, toDo]);
+  }
   return (
     <>
       <header
         className="w-100 py-2 ps-3 mb-4"
         style={{ backgroundColor: "#502", color: "white" }}
-        id="bob"
       >
         <h1>To do list</h1>
       </header>
       <main className="container pxsm-5">
         <ul className="list-group"></ul>
-        <form>
+        <form onSubmit={handleSubmit}>
           <input
             id="new-item"
             className="form-control"
@@ -21,13 +32,12 @@ function App() {
             required
           />
           <label htmlFor="new-item">
-            <input
-              type="submit"
-              value="Add item"
-              className="btn btn-primary d-none"
-            ></input>
+            <Submit />
           </label>
         </form>
+        <ul className="list-group">
+          <List value={todos} />
+        </ul>
       </main>
     </>
   );
